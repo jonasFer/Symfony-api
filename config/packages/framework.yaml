@@ -1,11 +1,6 @@
 framework:
     secret: '%env(APP_SECRET)%'
-    #default_locale: en
-    #csrf_protection: true
-    #http_method_override: true
 
-    # Enables session support. Note that the session will ONLY be started if you read or write from it.
-    # Remove or comment this section to explicitly disable session support.
     session:
         handler_id: ~
         cookie_secure: auto
@@ -15,10 +10,6 @@ framework:
     #fragments: true
     php_errors:
         log: true
-
-    serializer:
-        circular_reference_handler: App\Infrastructure\Serializer\CircularReferenceHandler
-        enabled: true
 
     assets:
         packages:

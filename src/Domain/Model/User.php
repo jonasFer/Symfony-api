@@ -22,6 +22,11 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Ator")
+     */
+    private $ator;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"public"})
      */
@@ -38,11 +43,6 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\TaskList", mappedBy="user")
-     */
-    private $lists;
-
     public function __construct()
     {
         $this->lists = new ArrayCollection();
@@ -52,6 +52,22 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAtor()
+    {
+        return $this->ator;
+    }
+
+    /**
+     * @param mixed $ator
+     */
+    public function setAtor($ator): void
+    {
+        $this->ator = $ator;
     }
 
     public function getEmail(): ?string
@@ -125,36 +141,5 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection|TaskList[]
-     */
-    public function getLists(): Collection
-    {
-        return $this->lists;
-    }
-
-    public function addList(TaskList $list): self
-    {
-        if (!$this->lists->contains($list)) {
-            $this->lists[] = $list;
-            $list->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeList(TaskList $list): self
-    {
-        if ($this->lists->contains($list)) {
-            $this->lists->removeElement($list);
-            // set the owning side to null (unless already changed)
-            if ($list->getUser() === $this) {
-                $list->setUser(null);
-            }
-        }
-
-        return $this;
     }
 }
